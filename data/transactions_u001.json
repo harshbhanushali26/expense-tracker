@@ -1,0 +1,130 @@
+{
+    "aff42989-6407-4b80-a1d0-cbbe93403b16": {
+        "id": "aff42989-6407-4b80-a1d0-cbbe93403b16",
+        "type": "income",
+        "amount": 20000.0,
+        "category": "Freelance",
+        "date": "2025-07-18",
+        "description": null
+    },
+    "b514c8d7-ae37-4a88-b2b1-71db43b111fd": {
+        "id": "b514c8d7-ae37-4a88-b2b1-71db43b111fd",
+        "type": "income",
+        "amount": 5000.0,
+        "category": "Salary",
+        "date": "2025-07-01",
+        "description": "Freelance project"
+    },
+    "9e5428ab-1dab-45b0-8cf1-2c4d62417692": {
+        "id": "9e5428ab-1dab-45b0-8cf1-2c4d62417692",
+        "type": "expense",
+        "amount": 350.0,
+        "category": "Food",
+        "date": "2025-07-02",
+        "description": "Dinner at restaurant"
+    },
+    "054f88ec-90bc-4651-952b-bda1762c64d3": {
+        "id": "054f88ec-90bc-4651-952b-bda1762c64d3",
+        "type": "expense",
+        "amount": 1200.0,
+        "category": "Rent",
+        "date": "2025-07-03",
+        "description": "July House Rent"
+    },
+    "ec12313b-e3e1-4173-8b68-4953901c7245": {
+        "id": "ec12313b-e3e1-4173-8b68-4953901c7245",
+        "type": "expense",
+        "amount": 250.0,
+        "category": "Transport",
+        "date": "2025-07-04",
+        "description": "Uber ride"
+    },
+    "c8149d5f-ae9c-4a03-aed0-a8cf52560ef6": {
+        "id": "c8149d5f-ae9c-4a03-aed0-a8cf52560ef6",
+        "type": "income",
+        "amount": 2500.0,
+        "category": "Freelance",
+        "date": "2025-07-05",
+        "description": "Logo Design"
+    },
+    "37103865-dcb9-4c96-a5a3-b9c0df751bd8": {
+        "id": "37103865-dcb9-4c96-a5a3-b9c0df751bd8",
+        "type": "expense",
+        "amount": 500.0,
+        "category": "Utilities",
+        "date": "2025-07-06",
+        "description": "Groceries"
+    },
+    "38ec834d-9a41-4689-9663-c41f585f9b78": {
+        "id": "38ec834d-9a41-4689-9663-c41f585f9b78",
+        "type": "expense",
+        "amount": 80.0,
+        "category": "Entertainment",
+        "date": "2025-07-07",
+        "description": "Movie Ticket"
+    },
+    "f1a46ed9-3f3d-4552-96da-8714d67eb048": {
+        "id": "f1a46ed9-3f3d-4552-96da-8714d67eb048",
+        "type": "income",
+        "amount": 4000.0,
+        "category": "Freelance",
+        "date": "2025-07-08",
+        "description": "Website New Feature Added"
+    },
+    "884828e9-b826-4b8a-9eb5-336e79573bc8": {
+        "id": "884828e9-b826-4b8a-9eb5-336e79573bc8",
+        "type": "expense",
+        "amount": 1800.0,
+        "category": "Shopping",
+        "date": "2025-07-10",
+        "description": "New Clothes"
+    },
+    "8d92d94a-23bb-4269-9b35-95a160aa1608": {
+        "id": "8d92d94a-23bb-4269-9b35-95a160aa1608",
+        "type": "expense",
+        "amount": 450.0,
+        "category": "Shopping",
+        "date": "2025-07-20",
+        "description": "Laptop Stand"
+    },
+    "be42625d-1892-44c3-a4d0-57097ced5e50": {
+        "id": "be42625d-1892-44c3-a4d0-57097ced5e50",
+        "type": "income",
+        "amount": 3500.0,
+        "category": "Interest",
+        "date": "2025-07-20",
+        "description": "Bank Interest"
+    },
+    "dd92e5d2-31ba-426b-84a3-c6e4a81d927d": {
+        "id": "dd92e5d2-31ba-426b-84a3-c6e4a81d927d",
+        "type": "income",
+        "amount": 2000.0,
+        "category": "Freelance",
+        "date": "2025-07-23",
+        "description": "Bug Fixing"
+    },
+    "5bed702f-8318-426d-86d9-d8a0c0ba88f7": {
+        "id": "5bed702f-8318-426d-86d9-d8a0c0ba88f7",
+        "type": "income",
+        "amount": 50000.0,
+        "category": "Freelance",
+        "date": "2025-08-02",
+        "description": "Per month service"
+    },
+    "3b6ef80c-786c-4be2-950c-a0e2c02595cd": {
+        "id": "3b6ef80c-786c-4be2-950c-a0e2c02595cd",
+        "type": "expense",
+        "amount": 1500.0,
+        "category": "Other",
+        "date": "2025-08-03",
+        "description": "Eye Specs"
+    },
+    "79b16941-28af-496b-bb02-a049697b8b02": {
+        "id": "79b16941-28af-496b-bb02-a049697b8b02",
+        "type": "income",
+        "amount": 400.0,
+        "category": "Other",
+        "date": "2025-08-06",
+        "description": "X first income"
+    }
+}
