@@ -2,9 +2,9 @@
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Repo Size](https://img.shields.io/github/repo-size/yourusername/expense-tracker)](../../)
-[![Issues](https://img.shields.io/github/issues/yourusername/expense-tracker)](../../issues)
-[![Last Commit](https://img.shields.io/github/last-commit/yourusername/expense-tracker)](../../commits/main)
+[![Repo Size](https://img.shields.io/github/repo-size/harshbhanushali26/expense-tracker)](../../)
+[![Issues](https://img.shields.io/github/issues/harshbhanushali26/expense-tracker)](../../issues)
+[![Last Commit](https://img.shields.io/github/last-commit/harshbhanushali26/expense-tracker)](../../commits/main)
 
 A simple **Python CLI app** to track income, expenses, and budgets with multi-user support.  
 Stores data in **JSON files** and offers analytics, filtering, and a modular structure for easy upgrades.
@@ -55,7 +55,8 @@ Expense-Tracker/
 ## 🚀 Installation
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/expense-tracker.git
+git clone https://github.com/harshbhanushali26
+/expense-tracker.git
 cd expense-tracker
 
 # 2. Create a virtual environment
