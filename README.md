@@ -14,6 +14,7 @@ Stores data in **JSON files** and offers analytics, filtering, and a modular str
 ## ✨ Features
 - 🔑 Multi-user authentication (password hashing)
 - ➕ Add, view, delete transactions (income/expense)
+- ✏️ Create and manage custom categories
 - 🗂 Categorized tracking with daily, monthly, and category breakdown
 - 🔍 Advanced filtering by category, date range, type, month, exact date
 - 💾 Persistent per-user JSON storage
@@ -27,6 +28,7 @@ Stores data in **JSON files** and offers analytics, filtering, and a modular str
 Expense-Tracker/
 ├── core/
 │ ├── manager.py
+│ ├── category.py
 │ └── transaction.py
 ├── data/
 │ ├── transactions_u001.json
@@ -34,12 +36,12 @@ Expense-Tracker/
 │ └── users.json
 ├── menu/
 │ ├── analysis_menu.py
+| ├── category_menu.py
 │ ├── main_menu.py
 │ └── manage_menu.py
 ├── utils/
 │ ├── auth.py
 │ ├── init.py
-│ ├── categories.py
 │ ├── display.py
 │ ├── filtering.py
 │ ├── json_io.py
@@ -80,7 +82,6 @@ python main.py
 - ☁️ Cloud sync
 - 💱 Multi-currency support
 - ⏳ Scheduled reports
-- 🗂 Custom categories (add/view in app or category section)
 - 💰 Budget limits & budget vs actual analysis
 - 🔄 Recurring transactions (auto add & due check)
 
