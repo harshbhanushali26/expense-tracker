@@ -143,6 +143,7 @@ def display_summary(summary, title, is_today=False, period_label="day"):
     
     console.print(summary_panel)
  
+
 # ====================================== Dashboard =================================== # 
         
 def get_today_panel(today_summary, user_name):
@@ -222,8 +223,9 @@ def show_main_menu():
     table.add_column("Option", style="bold yellow")
     table.add_column("Action", style="white")
 
-    table.add_row("1", "⚙️ Manage Transactions")
-    table.add_row("2", "📊 Analysis")
+    table.add_row("1", "⚙️  Manage Transactions")
+    table.add_row("2", "📊  Analysis")
+    table.add_row("3", "📋  Manage Categories")
     table.add_row("0", "🚪 Exit")
 
     console.print(Panel.fit(table, title="📟 Expense Tracker Console", border_style="cyan", padding=(1, 2)))
@@ -253,3 +255,15 @@ def show_analysis_menu():
     table.add_row("0", "🔙  Back to Main Menu")
 
     console.print(Panel.fit(table, title="📊  Analysis", border_style="cyan", padding=(1, 2)))
+
+
+def show_category_menu():
+    table = Table.grid(padding=(0, 2))
+    table.add_column("Option", style="bold yellow", justify="center")
+    table.add_column("Action", style="white")
+    table.add_row("1", "➕  Add Category")
+    table.add_row("2", "📋  View Catgories")
+    table.add_row("0", "🔙  Back to Main Menu")
+
+    console.print(Panel.fit(table, title="📋  Manage Categories", border_style="cyan", padding=(1, 2)))
+    

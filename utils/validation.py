@@ -48,6 +48,9 @@ def validate_category(prompt, category_list, allow_blank=True):
         value = Prompt.ask(prompt, show_default=True).strip()
         if allow_blank and value == "":
             return None  # user skipped
+        
+        if value == "new":
+            return value
 
         if value in category_list:
             return value
@@ -55,7 +58,7 @@ def validate_category(prompt, category_list, allow_blank=True):
 
 
 def validate_description(prompt, allow_blank=True):
-    value = input(prompt).strip()
+    value = Prompt.ask(prompt).strip()
     if allow_blank and value == "":
             return None  # user skipped
 

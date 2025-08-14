@@ -2,22 +2,24 @@ from utils.display import show_main_menu, print_section_title, print_error, prin
 from rich.prompt import Prompt
 from menu.manage_menu import manage_main_menu
 from menu.analysis_menu import analysis_main_menu
+from menu.category_menu import manage_category_menu
 
 
 
 
-
-def main_menu(manager):
+def main_menu(manager, category_manager):
     
     while True: 
-        print_section_title("Main Menu", "🛠️  ")
+        print_section_title("Main Menu", "🛠️ ")
         show_main_menu()
         choice = Prompt.ask("\n👉 Select an option").strip()
 
         if choice == "1":
-            manage_main_menu(manager)
+            manage_main_menu(manager, category_manager)
         elif choice == "2":
-            analysis_main_menu(manager)
+            analysis_main_menu(manager, category_manager)
+        elif choice == "3":
+            manage_category_menu(category_manager)
         elif choice == "0":
             print_success("Thank you for using Personal Expense Tracker! 👋")
             exit()

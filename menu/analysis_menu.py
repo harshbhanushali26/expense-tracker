@@ -3,7 +3,6 @@ from rich.prompt import Prompt
 from utils.display import print_section_title, print_warning, console, display_summary, Table, datetime, box, show_analysis_menu, print_error, print_txn_table, print_success
 from utils.filtering import filter_by_criteria, filter_by_month
 from utils.validation import validate_type, validate_category, validate_date
-from utils.categories import get_expense_categories, get_income_categories
 
 
 
@@ -26,14 +25,14 @@ def handle_monthly_summary(manager):
     display_summary(summary, f"📅 Summary for {month}", is_today=False, period_label="month")
 
 
-def handle_category_breakdown(manager):
+def handle_category_breakdown(manager, category_manager):
     
     console.print("\n[bold cyan]📊 Category Breakdown[/bold cyan]\n")
     
-    txn_list = handle_filter(manager, filter_usage="category breakdown")
+    txn_list = handle_filter(manager, category_manager, filter_usage="category breakdown")
     
         
-    type = validate_type("Enter type (income/expense)")
+    type = validate_type("Enter type (income/expense)", allow_blank=False)
     breakdown = get_category_breakdown(type, txn_list)
         
     if not breakdown:
@@ -106,7 +105,7 @@ def get_sort_choice():
     return sort_by, order
 
 
-def handle_filter(manager, filter_usage=None):
+def handle_filter(manager, category_manager, filter_usage=None):
     
     type_filter = category_filter = None
     date_filter = from_date = to_date = month_filter = None
@@ -178,7 +177,7 @@ def handle_filter(manager, filter_usage=None):
             type_filter = validate_type("Enter Type (income/expense or press Enter to skip)", allow_blank=True)
             
             if type_filter:
-                categories = get_income_categories() if type_filter == "income" else get_expense_categories()
+                categories = category_manager.get_income_categories() if type_filter == "income" else category_manager.get_expense_categories()
                 category_filter = validate_category(
                     f"Enter category (or press Enter to skip) - ({', '.join(categories)})", 
                     categories, allow_blank=True
@@ -249,14 +248,13 @@ def get_category_breakdown(type_, txns):
     return category_wise_summary
 
 
-
-def analysis_main_menu(manager):
+def analysis_main_menu(manager, category_manager):
     
     actions = {
         "1": lambda: handle_daily_summary(manager),
         "2": lambda: handle_monthly_summary(manager),
-        "3": lambda: handle_category_breakdown(manager),
-        "4": lambda: handle_filter(manager, filter_usage=""),
+        "3": lambda: handle_category_breakdown(manager, category_manager),
+        "4": lambda: handle_filter(manager, category_manager, filter_usage=""),
         "0": lambda: None
         }
     
@@ -276,6 +274,7 @@ def analysis_main_menu(manager):
             input("\n[Press Enter to return to main menu...]")  # ⏸️ Pause after action
         else:
             print_error("Invalid choice. Please try again.")
+      
             
 if __name__ == "__main__":
     analysis_main_menu()

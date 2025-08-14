@@ -4,6 +4,10 @@ from pathlib import Path
 from datetime import datetime
 
 USERS_FILE = Path("data") / "users.json"
+DEFAULT_CATEGORIES = {
+    "income": ["Salary", "Freelance", "Bonus", "Interest", "Other"], 
+    "expense": ["Food", "Rent", "Utilities", "Transport", "Entertainment", "Health", "Shopping", "Other"]
+}
 
 
 def generate_user_id(users: dict):
@@ -47,7 +51,8 @@ def signup(username, password):
     users[user_id] = {
         "username": username,
         "password": hash_password(password),
-        "created_at": datetime.now().isoformat()
+        "created_at": datetime.now().isoformat(), 
+        "categories": DEFAULT_CATEGORIES.copy()  # default categories
     }
     save_users(users)
     return user_id
@@ -60,3 +65,6 @@ def login(username, password):
         if user["username"] == username and user["password"] == hash_password(password):
             return user_id
     return None
+
+
+# save or update categories part in users.json

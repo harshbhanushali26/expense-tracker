@@ -126,5 +126,45 @@
         "category": "Other",
         "date": "2025-08-06",
         "description": "X first income"
+    },
+    "aa765760-7aa2-4711-a7cf-e70d5e8dcd49": {
+        "id": "aa765760-7aa2-4711-a7cf-e70d5e8dcd49",
+        "type": "income",
+        "amount": 150.0,
+        "category": "Other",
+        "date": "2025-08-14",
+        "description": "Blessing from relatives"
+    },
+    "9481ddd9-6aaf-44cd-b6b9-8cb0ac579d24": {
+        "id": "9481ddd9-6aaf-44cd-b6b9-8cb0ac579d24",
+        "type": "expense",
+        "amount": 10.0,
+        "category": "Utilities",
+        "date": "2025-08-14",
+        "description": "chocolate"
+    },
+    "62162131-4226-4752-b8d2-715d51a50eca": {
+        "id": "62162131-4226-4752-b8d2-715d51a50eca",
+        "type": "expense",
+        "amount": 30.0,
+        "category": "Repairing",
+        "date": "2025-08-14",
+        "description": "Watch Repairing"
+    },
+    "9f89d6da-77ae-45c2-b440-b4aed989b68d": {
+        "id": "9f89d6da-77ae-45c2-b440-b4aed989b68d",
+        "type": "income",
+        "amount": 500.0,
+        "category": "Blessings",
+        "date": "2025-08-14",
+        "description": "gift"
+    },
+    "1d0c1ea0-27a7-4316-a5ca-fc6d9e9b59b1": {
+        "id": "1d0c1ea0-27a7-4316-a5ca-fc6d9e9b59b1",
+        "type": "income",
+        "amount": 100.0,
+        "category": "Blessings",
+        "date": "2025-08-14",
+        "description": "gift"
     }
 }

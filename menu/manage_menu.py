@@ -1,5 +1,4 @@
 from utils.validation import validate_amount,validate_category,validate_date,validate_description,validate_type
-from utils.categories import get_expense_categories, get_income_categories
 from core.transaction import Transaction
 from rich.prompt import Prompt
 from utils.display import print_section_title, print_success, print_warning, print_error, console, show_transaction_menu
@@ -7,15 +6,32 @@ from menu.analysis_menu import handle_filter
 
 
 
-def handle_add_transaction(manager):
+def handle_add_transaction(manager, category_manager):
     print_section_title("Add New Transaction", "➕", color="cyan")
     
-    type = validate_type("Enter type (income/expense): ", allow_blank=False)
-    amount = validate_amount("Enter amount: ", allow_blank=False)
-    categories = get_income_categories() if type == "income" else get_expense_categories()
-    category = validate_category(f"Enter category ({', '.join(categories)}): ", categories, allow_blank=False)
-    txn_date = validate_date("Enter date (YYYY-MM-DD): ", allow_blank=False)
-    description = validate_description("Enter description (optional): ", allow_blank=True)
+    type = validate_type("Enter type (income/expense)", allow_blank=False)
+    amount = validate_amount("Enter amount", allow_blank=False)
+    categories = category_manager.get_income_categories() if type == "income" else category_manager.get_expense_categories()
+    category = new_category = ""
+    while True:
+        category = validate_category(f"Enter category ({', '.join(categories)} or 'new' for custom)", categories, allow_blank=False)
+        
+        if category == "new":
+            new_category = input("Enter custom category name: ").strip()
+            
+            success = category_manager.add_category(type, new_category)
+            if success:
+                category = new_category
+                print_success(f"Category '{new_category}' added successfully!")
+                break
+            else:
+                print_error("Category already exist, Retry")
+        break
+            
+        
+    
+    txn_date = validate_date("Enter date (YYYY-MM-DD)", allow_blank=False)
+    description = validate_description("Enter description (optional)", allow_blank=True)
 
     transaction = Transaction(type, amount, category, txn_date, description=description)
     success = manager.add_transaction(transaction)
@@ -25,12 +41,12 @@ def handle_add_transaction(manager):
         print_error("Failed to add transaction!")
 
 
-def handle_update_transaction(manager):
+def handle_update_transaction(manager, category_manager):
     print_section_title("Update Transaction", "✏️ ", color="cyan")
     
     ask = Prompt.ask("Want to search for a transaction before selecting one? (y/n)").strip().lower()
     if ask in ['yes', 'y' ]:
-        handle_filter(manager)
+        handle_filter(manager, category_manager)
         
     txn_id = Prompt.ask("Enter the Transaction ID to update")
 
@@ -41,17 +57,17 @@ def handle_update_transaction(manager):
     current_txn = manager.transactions[txn_id]
     console.print("[dim]Press Enter to skip any field you don't want to change.[/dim]")
 
-    new_type = validate_type("Enter new type (income/expense): ", allow_blank=True)
+    new_type = validate_type("Enter new type (income/expense)", allow_blank=True)
     new_amount = validate_amount("Enter new amount: ", allow_blank=True)
 
     if new_type:
-        categories = get_income_categories() if new_type == "income" else get_expense_categories()
+        categories = category_manager.get_income_categories() if new_type == "income" else category_manager.get_expense_categories()
     else:
-        categories = get_income_categories() if current_txn.type == "income" else get_expense_categories()
+        categories = category_manager.get_income_categories() if current_txn.type == "income" else category_manager.get_expense_categories()
 
-    new_category = validate_category(f"Enter new category ({', '.join(categories)}): ", categories, allow_blank=True)
-    new_date = validate_date("Enter new date (YYYY-MM-DD): ", allow_blank=True)
-    new_desc = validate_description("Enter new description: ", allow_blank=True)
+    new_category = validate_category(f"Enter new category ({', '.join(categories)})", categories, allow_blank=True)
+    new_date = validate_date("Enter new date (YYYY-MM-DD)", allow_blank=True)
+    new_desc = validate_description("Enter new description", allow_blank=True)
 
     updated_fields = {
         "type": new_type,
@@ -80,12 +96,12 @@ def handle_update_transaction(manager):
         print_error("Failed to update transaction!")
 
 
-def handle_delete_transaction(manager):
+def handle_delete_transaction(manager, category_manager):
     print_section_title("Delete Transaction", "🗑️ ", color="cyan")
     
     ask = Prompt.ask("Want to search for a transaction before selecting one? (y/n)").strip().lower()
     if ask in ['yes', 'y' ]:
-        handle_filter(manager)
+        handle_filter(manager, category_manager)
     
     txn_id = Prompt.ask("Enter the Transaction ID to delete")
     
@@ -105,11 +121,11 @@ def handle_exit():
     return
 
 
-def manage_main_menu(manager): 
+def manage_main_menu(manager, category_manager): 
     actions = {
-                "1": lambda: handle_add_transaction(manager),
-                "2": lambda: handle_update_transaction(manager),
-                "3": lambda: handle_delete_transaction(manager),
+                "1": lambda: handle_add_transaction(manager, category_manager), 
+                "2": lambda: handle_update_transaction(manager, category_manager), 
+                "3": lambda: handle_delete_transaction(manager, category_manager), 
                 "0": lambda: None
             }
     

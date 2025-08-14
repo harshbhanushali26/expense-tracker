@@ -2,11 +2,100 @@
   "u001": {
     "username": "adam",
     "password": "9c24f45a7ea9e4668ee31dc18bd0a9153f1413ceb3fad18b0a07e16e6a9bc587",
-    "created_at": "2025-07-18T23:34:35.746701"
+    "created_at": "2025-07-18T23:34:35.746701",
+    "categories": {
+      "income": [
+        "Salary",
+        "Freelance",
+        "Bonus",
+        "Interest",
+        "Other",
+        "Blessings"
+      ],
+      "expense": [
+        "Food",
+        "Rent",
+        "Utilities",
+        "Transport",
+        "Entertainment",
+        "Health",
+        "Shopping",
+        "Other",
+        "Repairing",
+        "Electricity Bill"
+      ]
+    }
   },
   "u002": {
     "username": "Harsh",
     "password": "5cd8645e8311342f270a642dcf704ef83464e1debb07db09c8aa4e49813f1b99",
-    "created_at": "2025-07-18T23:44:32.101484"
+    "created_at": "2025-07-18T23:44:32.101484",
+    "categories": {
+      "income": [
+        "Salary",
+        "Freelance",
+        "Bonus",
+        "Interest",
+        "Other"
+      ],
+      "expense": [
+        "Food",
+        "Rent",
+        "Utilities",
+        "Transport",
+        "Entertainment",
+        "Health",
+        "Shopping",
+        "Other"
+      ]
+    }
+  },
+  "u003": {
+    "username": "kabir",
+    "password": "f64b1f56c7fc9779d3d70b845f5864cdaf305764020dca6e1d708dc931e7741b",
+    "created_at": "2025-08-14T00:56:37.198110",
+    "categories": {
+      "income": [
+        "Salary",
+        "Freelance",
+        "Bonus",
+        "Interest",
+        "Other"
+      ],
+      "expense": [
+        "Food",
+        "Rent",
+        "Utilities",
+        "Transport",
+        "Entertainment",
+        "Health",
+        "Shopping",
+        "Other"
+      ]
+    }
+  },
+  "u004": {
+    "username": "hello",
+    "password": "b49f425a7e1f9cff3856329ada223f2f9d368f15a00cf48df16ca95986137fe8",
+    "created_at": "2025-08-14T01:04:03.898735",
+    "categories": {
+      "income": [
+        "Salary",
+        "Freelance",
+        "Bonus",
+        "Interest",
+        "Other"
+      ],
+      "expense": [
+        "Food",
+        "Rent",
+        "Utilities",
+        "Transport",
+        "Entertainment",
+        "Health",
+        "Shopping",
+        "Other"
+      ]
+    }
   }
 }

@@ -6,11 +6,12 @@ from utils.auth import login, signup
 from utils.display import print_header, print_success, print_warning, print_error, console, show_dashboard
 from datetime import datetime, date
 from menu.main_menu import main_menu
+from core.category import CategoryManager
 
 
 
 
-def handle_show_dashboard(manager, user_name):
+def handle_show_dashboard(manager, category_manager, user_name):
     today_date = date.today()
     current_year_month = datetime.today().strftime("%Y-%m")
     today_summary = manager.get_daily_summary(today_date.strftime("%Y-%m-%d"))
@@ -45,6 +46,7 @@ def handle_signup_option():
         password = input("🔒  Choose a password: ").strip()
         if signup(username, password):
             print_success("🎉 Signup successful! You can now log in.\n")
+            return
         else:
             print_warning("⚠️ Username already taken. Try a different one.\n")
             quit = Prompt.ask("Type 'q' to quit else leave Blank", show_default="True", default="").strip().lower()
@@ -78,9 +80,13 @@ def main():
             
     user_filepath = get_transaction_file(current_user_id)
     manager = ExpenseManager(filepath=user_filepath)
+    category_manager = CategoryManager(current_user_id)  
             
-    handle_show_dashboard(manager, username)
-    main_menu(manager)
+    # handle_show_dashboard(manager, username)
+    # main_menu(manager)
+    
+    handle_show_dashboard(manager, category_manager, username)
+    main_menu(manager, category_manager)
             
 
 
