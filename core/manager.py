@@ -12,12 +12,14 @@ class ExpenseManager:
         self.load_transactions()
 
 
+    # load all transactions of user 
     def load_transactions(self):
         raw_data = load_data(self.filepath)     # from utils
         self.transactions = {txn_id : Transaction.from_dict(data) for txn_id, data in raw_data.items()}
         return self.transactions
     
-
+    
+    # saving txns in dictionary form and calling save_data to save data in json file
     def save_transactions(self):
         transactions_dict = {
             txn_id: txn.to_dict() for txn_id, txn in self.transactions.items()
@@ -25,6 +27,7 @@ class ExpenseManager:
         save_data(self.filepath, transactions_dict)    # from utils
 
 
+    # adding txn
     def add_transaction(self, transaction: Transaction):
         # Checking and adding to dictionary
         if not isinstance(transaction, Transaction):
@@ -38,7 +41,8 @@ class ExpenseManager:
         return True
 
 
-    def update_transaction(self, txn_id:str, updated_fields):   # updated_fields = {} dictionary of fields to change
+    # update txns
+    def update_transaction(self, txn_id:str, updated_fields):  
         
         if txn_id not in self.transactions:
             return False
@@ -54,6 +58,7 @@ class ExpenseManager:
         return True
         
 
+    # delete txn
     def delete_transaction(self, txn_id:str):
         if txn_id not in self.transactions:
             return False
@@ -63,7 +68,7 @@ class ExpenseManager:
         return True
     
 
-
+    # get daily summary details
     def get_daily_summary(self, date):
         summary = {}
         num_income = 0
@@ -93,6 +98,7 @@ class ExpenseManager:
         return summary
     
 
+    # get monthly summary details
     def get_monthly_summary(self, month):
         summary = {}
         num_income = 0
@@ -126,6 +132,7 @@ class ExpenseManager:
         return summary
     
 
+    # get category details
     def get_category_breakdown(self, type_):
         category_wise_summary = {}
         
@@ -142,6 +149,7 @@ class ExpenseManager:
         return category_wise_summary
 
 
+    # calculate carry forward
     def _calculate_carry_forward(self, date_str):
 
         try:
@@ -166,6 +174,7 @@ class ExpenseManager:
         return carry_forward
             
               
+    # get top categories
     def get_top_categories(self, month:str, top_n: int = 5) -> list:
         txns = self.get_monthly_transactions(month)  
         category_totals = defaultdict(float)
@@ -178,6 +187,7 @@ class ExpenseManager:
         return sorted_totals[:top_n]
 
 
+    # get monthly txns
     def get_monthly_transactions(self, month: str):
         monthly_txns = []
         for txn in self.transactions.values():

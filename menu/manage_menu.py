@@ -142,9 +142,10 @@ def manage_main_menu(manager, category_manager):
             
         if action:
             action()
-            input("\n[Press Enter to return to main menu...]")  # ⏸️ Pause after action
+            input("\n[Press Enter to return to manage transaction menu...]")  # ⏸️ Pause after action
         else:
             print_error("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     manage_main_menu()

@@ -64,6 +64,7 @@ def manage_category_menu(category_manager):
         else:
             print_error("Invalid choice. Please try again.")
 
+
 if __name__ == "__main__":
     manage_category_menu()
         

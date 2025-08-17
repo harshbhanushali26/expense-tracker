@@ -1,5 +1,4 @@
 from datetime import datetime
-from rich.console import Console
 from rich.prompt import Prompt
 from utils.display import print_error
 

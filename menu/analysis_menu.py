@@ -6,10 +6,14 @@ from utils.validation import validate_type, validate_category, validate_date
 
 
 
+
 def handle_daily_summary(manager):
     print_section_title("Daily Summary", "📆", color="cyan")
-    date = validate_date("Enter date (YYYY-MM-DD): ")
+    date = validate_date("Enter date (YYYY-MM-DD)")
     
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+        
     console.print(" ")
     summary = manager.get_daily_summary(date)
     is_today = datetime.now().strftime("%Y-%m-%d") == date
@@ -19,7 +23,14 @@ def handle_daily_summary(manager):
 
 def handle_monthly_summary(manager):
     print_section_title("Monthly Summary", "📅", color="cyan")
-    month = Prompt.ask("Enter month (YYYY-MM)")
+    month = ""
+    while True:
+        month = Prompt.ask("Enter month (YYYY-MM)").strip()
+        if month == "":
+            print_error("cannot be empty, retry")
+        else:
+            break
+    
     summary = manager.get_monthly_summary(month)
     
     display_summary(summary, f"📅 Summary for {month}", is_today=False, period_label="month")
@@ -28,23 +39,27 @@ def handle_monthly_summary(manager):
 def handle_category_breakdown(manager, category_manager):
     
     console.print("\n[bold cyan]📊 Category Breakdown[/bold cyan]\n")
+    table = ""
     
+    # getting txns for date, month, range date 
     txn_list = handle_filter(manager, category_manager, filter_usage="category breakdown")
     
-        
-    type = validate_type("Enter type (income/expense)", allow_blank=False)
-    breakdown = get_category_breakdown(type, txn_list)
-        
-    if not breakdown:
-        print_warning("No data found for the selected type.")
-        return
+    if txn_list:
+        type = validate_type("Enter type (income/expense)", allow_blank=False)
+        breakdown = get_category_breakdown(type, txn_list)
+            
+        if not breakdown:
+            print_warning("No data found for the selected type.")
+            return
 
-    table = Table(title=f"{type.capitalize()} Breakdown", show_header=True, header_style="magenta", box=box.SIMPLE_HEAVY)
-    table.add_column("Category")
-    table.add_column("Total Amount", justify="right")
+        table = Table(title=f"{type.capitalize()} Breakdown", show_header=True, header_style="magenta", box=box.SIMPLE_HEAVY)
+        table.add_column("Category")
+        table.add_column("Total Amount", justify="right")
 
-    for category, total in breakdown.items():
-        table.add_row(category, str(total))
+        for category, total in breakdown.items():
+            table.add_row(category, str(total))
+    else:
+        table = ""
 
     console.print(table)
 
@@ -121,6 +136,7 @@ def handle_filter(manager, category_manager, filter_usage=None):
         month_filter = current_month
         transactions = filter_by_month(manager.transactions, month_filter)
         filter_summary = f"Month: {month_filter}"
+   
     else:
         
         # Step 2: Ask for date filters first
@@ -144,16 +160,7 @@ def handle_filter(manager, category_manager, filter_usage=None):
             
         if filter_usage == "category breakdown":
             # Apply all filters
-            transactions = filter_by_criteria(
-                manager.transactions, 
-                type=None, 
-                category=None,
-                date=date_filter, 
-                from_date=from_date, 
-                to_date=to_date, 
-                month=month_filter
-            )
-            
+         
             transactions = filter_by_criteria(
             manager.transactions, 
             type=type_filter, 
@@ -271,7 +278,7 @@ def analysis_main_menu(manager, category_manager):
             
         if action:
             action()
-            input("\n[Press Enter to return to main menu...]")  # ⏸️ Pause after action
+            input("\n[Press Enter to return to analysis menu...]")  # ⏸️ Pause after action
         else:
             print_error("Invalid choice. Please try again.")
       

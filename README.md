@@ -17,6 +17,7 @@ Stores data in **JSON files** and offers analytics, filtering, and a modular str
 - ✏️ Create and manage custom categories
 - 🗂 Categorized tracking with daily, monthly, and category breakdown
 - 🔍 Advanced filtering by category, date range, type, month, exact date
+- 📤 Export transactions to CSV, JSON, Excel, and PDF
 - 💾 Persistent per-user JSON storage
 - ⚙️ Modular, easy-to-extend design
 
@@ -27,25 +28,27 @@ Stores data in **JSON files** and offers analytics, filtering, and a modular str
 ## 📂 Project Structure
 Expense-Tracker/
 ├── core/
-│ ├── manager.py
-│ ├── category.py
-│ └── transaction.py
+│   ├── manager.py
+│   ├── category.py
+│   ├── transaction.py
+│   └── export.py         
 ├── data/
-│ ├── transactions_u001.json
-│ ├── transactions_u002.json
-│ └── users.json
+│   ├── transactions_u001.json
+│   ├── transactions_u002.json
+│   └── users.json
 ├── menu/
-│ ├── analysis_menu.py
-| ├── category_menu.py
-│ ├── main_menu.py
-│ └── manage_menu.py
+│   ├── analysis_menu.py
+│   ├── category_menu.py
+│   ├── main_menu.py
+│   ├── manage_menu.py
+│   └── export_menu.py    integration
 ├── utils/
-│ ├── auth.py
-│ ├── init.py
-│ ├── display.py
-│ ├── filtering.py
-│ ├── json_io.py
-│ └── validation.py
+│   ├── auth.py
+│   ├── init.py
+│   ├── display.py
+│   ├── filtering.py
+│   ├── json_io.py
+│   └── validation.py
 ├── .gitignore
 ├── main.py
 └── README.md
@@ -76,7 +79,6 @@ python main.py
 
 ## 🔮 Future Enhancements
 
-- 📤 Export to CSV, JSON, PDF
 - 💾 Backup & restore
 - 📈 Graphical dashboard
 - ☁️ Cloud sync

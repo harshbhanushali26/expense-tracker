@@ -76,70 +76,81 @@ def print_txn_table(txns: dict):
 
 def display_summary(summary, title, is_today=False, period_label="day"):
     today_text = " [Today]" if is_today else ""
-
-    table = Table(
-        title=f"[bold bright_cyan]{title}{today_text}[/]",
-        show_edge=True,
-        header_style="bold bright_cyan",
-        box=box.SIMPLE_HEAVY,
-        style="white"
-    )
-
-    # Add columns
-    table.add_column("Income", justify="right")
-    table.add_column("Expense", justify="right")
-    table.add_column("Carry Forward", justify="right")
-    table.add_column("Balance", justify="right")
-
-    # Add data row
-    table.add_row(
-        f"{summary['income']:,.2f}",
-        f"{summary['expense']:,.2f}",
-        f"{summary['carry_forward']:,.2f}",
-        f"[bold green]{summary['balance']:,.2f}[/]" if summary["balance"] > 0
-        else f"[bold red]{summary['balance']:,.2f}[/]"
-    )
-
-    table_panel = Panel.fit(table, style="bright_blue")
-
-    # Expense breakdown panel (optional)
-    category_breakdown_panel = None
-    if summary['breakdown']:
-        breakdown_text = "\n".join(
-            f" - {cat}: ₹{amt:,.2f}" for cat, amt in summary['breakdown'].items()
-        )
-        category_breakdown_panel = Panel(
-            breakdown_text,
-            title="📊 [bold bright_magenta]Expense Breakdown[/]",
-            border_style="bright_magenta",
+    table = table_panel = category_breakdown_panel = ""
+    balance_summary = footer_msg =  panel_items = summary_panel = ""
+    if (summary['income'] > 0 or summary['expense'] > 0) or summary['carry_forward'] > 0:
+        
+        table = Table(
+            title=f"[bold bright_cyan]{title}{today_text}[/]",
+            show_edge=True,
+            header_style="bold bright_cyan",
+            box=box.SIMPLE_HEAVY,
             style="white"
         )
 
-    # Footer messages
-    balance_summary = ""
-    if summary["balance"] > 0:
-        balance_summary = f"[bold green]✅ You saved ₹{summary['balance']:,.2f} this {period_label}![/]"
-    elif summary["balance"] < 0:
-        balance_summary = f"[bold red]⚠️ You overspent by ₹{-summary['balance']:,.2f} this {period_label}![/]"
+        # Add columns
+        table.add_column("Income", justify="right")
+        table.add_column("Expense", justify="right")
+        table.add_column("Carry Forward", justify="right")
+        table.add_column("Balance", justify="right")
 
-    footer_msg = Group(
-        f"[red]📌 Transactions: {summary['num_expense']} expenses, {summary['num_income']} income[/]",
-        f"[red]📌 Total Transactions: {summary['num_expense'] + summary['num_income']}[/]",
-        balance_summary
-    )
+        # Add data row
+        table.add_row(
+            f"{summary['income']:,.2f}",
+            f"{summary['expense']:,.2f}",
+            f"{summary['carry_forward']:,.2f}",
+            f"[bold green]{summary['balance']:,.2f}[/]" if summary["balance"] > 0
+            else f"[bold red]{summary['balance']:,.2f}[/]"
+        )
 
-    # Assemble final panel content
-    panel_items = [table_panel]
-    if category_breakdown_panel:
-        panel_items.append(category_breakdown_panel)
-    panel_items.append(footer_msg)
+        table_panel = Panel.fit(table, style="bright_blue")
 
-    summary_panel = Panel.fit(
-        Align.center(Group(*panel_items)),
-        title="📊 [bold green3]Summary[/]",
-        border_style="green3",
-        padding=(1, 2)
-    )
+        # Expense breakdown panel
+        category_breakdown_panel = None
+        if summary['breakdown']:
+            breakdown_text = "\n".join(
+                f" - {cat}: ₹{amt:,.2f}" for cat, amt in summary['breakdown'].items()
+            )
+            category_breakdown_panel = Panel(
+                breakdown_text,
+                title="📊 [bold bright_magenta]Expense Breakdown[/]",
+                border_style="bright_magenta",
+                style="white"
+            )
+
+        # Footer messages
+        balance_summary = ""
+        if summary["balance"] > 0:
+            balance_summary = f"[bold green]✅ You saved ₹{summary['balance']:,.2f} this {period_label}![/]"
+        elif summary["balance"] < 0:
+            balance_summary = f"[bold red]⚠️ You overspent by ₹{-summary['balance']:,.2f} this {period_label}![/]"
+
+        footer_msg = Group(
+            f"[red]📌 Transactions: {summary['num_expense']} expenses, {summary['num_income']} income[/]",
+            f"[red]📌 Total Transactions: {summary['num_expense'] + summary['num_income']}[/]",
+            balance_summary
+        )
+
+        # Assemble final panel content
+        panel_items = [table_panel]
+        if category_breakdown_panel:
+            panel_items.append(category_breakdown_panel)
+        panel_items.append(footer_msg)
+
+        summary_panel = Panel.fit(
+            Align.center(Group(*panel_items)),
+            title="📊 [bold green3]Summary[/]",
+            border_style="green3",
+            padding=(1, 2)
+        )
+    else:
+        summary_panel = Panel.fit(f"""
+[bold bright_cyan]{title}{today_text}[/]
+[bold yellow]There are no transactions![/bold yellow]""",
+            title="📊 [bold green3]Summary[/]",
+            border_style="green3",
+            padding=(1, 2)
+        )
     
     console.print(summary_panel)
  
@@ -147,45 +158,82 @@ def display_summary(summary, title, is_today=False, period_label="day"):
 # ====================================== Dashboard =================================== # 
         
 def get_today_panel(today_summary, user_name):
-        today_panel = Panel.fit(
+        
+        if today_summary['income'] > 0 or today_summary['expense'] > 0:
+            
+            today_panel = Panel.fit(
         f"""📅 [b]Today: {date.today()}[/b]
 ├─ Income: ₹{today_summary['income']:.2f}
 ├─ Expense: ₹{today_summary['expense']:.2f}
 └─ Balance: ₹{today_summary['balance']:.2f} 
 ✅ Saved ₹{today_summary['balance']:.2f} today!""",
-        title=f"📊 Welcome back, {user_name}!",
-        border_style="cyan",
-        padding=(1, 2)
-    )
+            title=f"📊 Welcome back, {user_name}!",
+            border_style="cyan",
+            padding=(1, 2)
+        )
+        else:
+            today_panel = Panel.fit(
+            f"""📅 [b]Today: {date.today()}[/b] 
+[bold yellow]There are no transactions for today.[/bold yellow]
+            """,
+            title=f"📊 Welcome back, {user_name}!",
+            border_style="cyan",
+            padding=(1, 2)
+        )
+            
         return today_panel
        
       
 def get_monthly_panel(month_summary):
-        month_panel = Panel.fit(
+        if (month_summary['income'] > 0 or month_summary['expense'] > 0) or month_summary['carry_forward'] > 0:
+            month_panel = Panel.fit(
         f"""🗓️  [b]This Month: {date.today():%B %Y}[/b]
 ├─ Total Income: ₹{month_summary['income']:.2f}
 ├─ Total Expense: ₹{month_summary['expense']:.2f}
 ├─ Carry Forward: ₹{month_summary['carry_forward']:.2f}
 └─ Net Savings: ₹{month_summary['balance']:.2f}""",
-        border_style="green",
-        padding=(1, 2)
-    )
+            border_style="green",
+            padding=(1, 2)
+        )
+        else:
+            month_panel = Panel.fit(
+            f"""🗓️  [b]This Month: {date.today():%B %Y}[/b]
+[bold yellow]There are no transactions for this month.[/bold yellow]    
+            """,
+            border_style="green",
+            padding=(1, 2)
+        )
         return month_panel
 
 
 def get_category_panel(top_categories):
-    category_table = Table(show_header=True, header_style="bold magenta", box=box.SIMPLE)
-    category_table.add_column("🔥 Category", justify="left")
-    category_table.add_column("Amount (₹)", justify="right")
-    for name, amt in top_categories:
-        category_table.add_row(name, f"{amt:.2f}")
+    category_table = category_panel = ""
+    
+    if top_categories:
+        category_table = Table(show_header=True, header_style="bold magenta", box=box.SIMPLE)
+        category_table.add_column("🔥 Category", justify="left")
+        category_table.add_column("Amount (₹)", justify="right")
+        
+        for name, amt in top_categories:
+            category_table.add_row(name, f"{amt:.2f}")
 
-    category_panel = Panel.fit(
-        category_table,
-        title="Top Spending Categories",
-        border_style="red",
-        padding=(1, 2)
-    )
+        category_panel = Panel.fit(
+            category_table,
+            title="Top Spending Categories",
+            border_style="red",
+            padding=(1, 2)
+        )
+    else:
+        category_table = f"""
+[bold yellow]There are no expense transactions![/bold yellow]
+        """
+        category_panel = Panel.fit(
+            category_table,
+            title="Top Spending Categories",
+            border_style="red",
+            padding=(1, 2)
+        )
+        
     return category_panel
         
     
@@ -218,7 +266,7 @@ def show_dashboard(today_summary, month_summary, top_categories, user_name):
 
 # ===================== MENU DISPLAY FUNCTIONS ===================== #
 
-def show_main_menu():   
+def show_main_menu():  
     table = Table.grid(padding=(0, 2))
     table.add_column("Option", style="bold yellow")
     table.add_column("Action", style="white")
@@ -226,7 +274,8 @@ def show_main_menu():
     table.add_row("1", "⚙️  Manage Transactions")
     table.add_row("2", "📊  Analysis")
     table.add_row("3", "📋  Manage Categories")
-    table.add_row("0", "🚪 Exit")
+    table.add_row("4", "📁  Export Documents")
+    table.add_row("0", "🚪  Exit")
 
     console.print(Panel.fit(table, title="📟 Expense Tracker Console", border_style="cyan", padding=(1, 2)))
 
@@ -267,3 +316,15 @@ def show_category_menu():
 
     console.print(Panel.fit(table, title="📋  Manage Categories", border_style="cyan", padding=(1, 2)))
     
+    
+def show_export_menu():
+    table = Table.grid(padding=(0, 2))
+    table.add_column("Option", style="bold yellow", justify="center")
+    table.add_column("Action", style="white")
+    table.add_row("1", "🧾  Export CSV")
+    table.add_row("2", "📊  Export EXCEL")
+    table.add_row("3", "📥  Export PDF")
+    table.add_row("4", "♻️  Back Up Data")
+    table.add_row("0", "🔙  Back to Main Menu")
+
+    console.print(Panel.fit(table, title="📋  Export Files", border_style="cyan", padding=(1, 2)))
